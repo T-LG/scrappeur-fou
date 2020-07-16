@@ -1,10 +1,10 @@
 require_relative '../lib/dark-trader'
 
 # affichage initial 
-puts "Test lancé, en train de tester le programme"
+puts "Test dark-trader lancé, en train de tester le programme"
 
 # variables de test
-url_page = "https://coinmarketcap.com/all/views/all/"
+url_page = "https://www.coinmarketcap.com/all/views/all/"
 page = get_page(url_page)
 symbols_array = get_symbols_array(page)
 prices_array = get_prices_array(page)

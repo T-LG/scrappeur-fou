@@ -54,7 +54,7 @@ end
 # Méthode princiaple (perform), retourne crypto_info
 def perform
   puts "Récupération de la page à scrapper"
-  page = get_page("https://coinmarketcap.com/all/views/all/")
+  page = get_page("https://www.coinmarketcap.com/all/views/all/")
   print "Page à scrapper récupérée avec succès\nScrappage des symboles en cours\n"
   symbols_array = get_symbols_array(page)
   print "Scrappage des symboles effectué avec succès\nScrappge des prix en cours\n"
