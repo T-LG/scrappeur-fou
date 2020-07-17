@@ -24,12 +24,18 @@ end
 def perform
   source_url = "http://www2.assemblee-nationale.fr"
   results = []
+  i = 0
   # récupération des données dans un tableau
   print "en cours... prend énormément de temps"
   get_urls.each do |link|
+    if (i > 10)
+       break
+    end
+    i += 1
     url = source_url + link['href']
     results << get_res(url)
   end
+  print results
   return results
 end
 
