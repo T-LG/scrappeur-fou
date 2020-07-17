@@ -15,17 +15,17 @@ def get_res(url)
 end
 
 def get_urls
-  page = Nokogiri::HTML(open())
+  page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
   # récupération des liens
-  puts "Start scraping..."
   urls = page.xpath('//*[@id="deputes-list"]//li/a')
   return urls
 end
 
 def perform
-  source_url = 
+  source_url = "http://www2.assemblee-nationale.fr"
   results = []
   # récupération des données dans un tableau
+  print "en cours... prend énormément de temps"
   get_urls.each do |link|
     url = source_url + link['href']
     results << get_res(url)

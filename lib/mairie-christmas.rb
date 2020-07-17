@@ -13,20 +13,20 @@ def get_url_cities_array(page)
   urls = page.xpath('//*[@class="lientxt"]/@href') 
   urls.each do |url|
     url_cities_array << ("https://www.annuaire-des-mairies.com" + url.text[1..-1]) # rajout à partir du deuxième caractère pour éviter d'ajouter le point 
+    print "." # affichage pour simuler le chargement
   end
   return url_cities_array
 end
 
-# retourne l'email d'une marie d'une ville du Val d'Oise (prise de liberté avec l'énoncé pour avoir, aussi, le nom, le tout dans un hash)
-def get_townhall_email_hash(townhall_url)
+# retourne l'email d'une marie d'une ville du Val d'Oise 
+def get_townhall_email(townhall_url)
   page = get_page(townhall_url)
-  email_hash = Hash.new
   email = page.xpath('//*[contains(text(), "@")]').text
   town_name = page.xpath('//*[contains(text(), "Adresse mairie de")]').text.split #nom de ville
-  email_hash = {town_name[3] => email} #nom
-  return email_hash
+  email_array_one_hash = [{town_name[3] => email}] #nom
+  return email_array_one_hash
 end
-# si on voulait suivre l'énoncé, il suffirait de retourner juste l'email et de faire ce qui est fait ici dans la méthode perform
+# il existe une méthode plus facile et plus rapide mais on a fait celle là pour suivre l'énoncé
 
 # Méthode princiaple (perform), retourne twonhalls_emails_array
 def perform
@@ -34,14 +34,14 @@ def perform
   page = get_page("https://www.annuaire-des-mairies.com/val-d-oise.html")
   print "Page à scrapper récupérée avec succès\nScrappage des URLs des villes du Val d'Oise en cours\n"
   url_cities_array = get_url_cities_array(page)
-  print "Scrappage desdites villes effectué avec succès\nScrappge des emails de chaque ville en cours\n"
+  print "\nScrappage desdites villes effectué avec succès\nScrappge des emails de chaque ville en cours (cela risque de prendre un peu de temps)\n"
   # créer un tableau contenant tous les emails des mairies des villes du Val d'Oise
   townhalls_emails_array = []
   url_cities_array.each do |townhall_url| # prend du temps car charge à chaque fois une page HTML
-    townhalls_emails_array.push(get_townhall_email_hash(townhall_url))
+    townhalls_emails_array << get_townhall_email(townhall_url)[0]
     print "." # affichage pour simuler le chargement
   end
-  puts townhalls_emails_array
+  print townhalls_emails_array
   puts "\nAffichage effectué avec succès\nFin du programme"
   return townhalls_emails_array
 end
